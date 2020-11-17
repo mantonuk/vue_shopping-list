@@ -10,8 +10,8 @@
     <div id="shopping-list">
         <h1>{{ header.toLocaleUpperCase() }}</h1>
         <div class="add-item-form">
-            <input v-model="newItem" type="text" placeholder="Add new item" v-on:keyup.enter="items.push(newItem)">
-            <button class="button-primary" v-on:click="items.push(newItem)">Save</button>
+            <input v-model="newItem" type="text" placeholder="Add new item" @keyup.enter="saveItem">
+            <button class="button-primary" @click="saveItem">Save</button>
         </div>
         <ul>
             <li v-for="item in items">{{ item }}</li>
@@ -29,6 +29,12 @@
                     'item 2',
                     'item 3',
                 ]
+            },
+            methods: {
+                saveItem : function() {
+                    this.items.push(this.newItem);
+                    this.newItem = '';
+                }
             }
         })
     </script>
