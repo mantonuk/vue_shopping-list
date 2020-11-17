@@ -18,7 +18,7 @@
             <button class="btn btn-primary" @click="saveItem" :disabled="newItem.length === 0">Save</button>
         </div>
         <ul>
-            <li v-for="item in items">{{ item }}</li>
+            <li v-for="item in items" :class="{strikeout: item.purchased}" @click="togglePurchased(item)">{{ item.label }}</li>
         </ul>
         <p v-if="items.length === 0">Empty!</p>
     </div>
@@ -30,20 +30,37 @@
                 state: 'default',
                 header: 'My sopping list',
                 newItem : "",
-                items: [
-                    'item 1',
-                    'item 2',
-                    'item 3',
+                items: [ 
+                    {
+                        label : 'Item 1',
+                        purchased : false,
+                    },
+                    {
+                        label : 'Item 2',
+                        purchased : true,
+                    },
+                    {
+                        label : 'Item 3',
+                        purchased : false,
+                    },
                 ]
             },
             methods: {
                 saveItem : function() {
-                    this.items.push(this.newItem);
+                    this.items.push(
+                        {
+                            label: this.newItem,
+                            purchased: false
+                        }
+                    );
                     this.newItem = '';
                 },
                 setState : function(value) {
                     this.state = value;
                     this.newItem = '';
+                },
+                togglePurchased : function (item) {
+                    item.purchased = !item.purchased;
                 }
             }
         })
