@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <div class="shopping-list">
+        <h1>{{ header }}</h1>
+    </div>
+    <script src="https://unpkg.com/vue"></script>
+    <script>
+        var shoppingList = new Vue({
+            el: '#shopping-list',
+            data: {
+                header: 'Vue ready!',
+            }
+        })
+    </script>
+</body>
+</html>
