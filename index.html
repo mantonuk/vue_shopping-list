@@ -8,10 +8,10 @@
 </head>
 <body>
     <div id="shopping-list">
-        <div v-if="countTotal > 0">
-            <span>Total: {{ countTotal }}</span>, 
-            <span>Purchased: {{ countPurchased}}</span>, 
-            <span>Hi-Priority: {{ countHiPriority}}</span>, 
+        <div v-if="countItemsTotal > 0">
+            <span>Total: {{ countItemsTotal }}</span>, 
+            <span>Purchased: {{ countItemsPurchased }}</span>, 
+            <span>Hi-Priority: {{ countItemsPriority }}</span>, 
         </div>
         <div class="header">
             <h1>{{ header.toLocaleUpperCase() }}</h1>
@@ -35,8 +35,8 @@
                 this.updateCounters();
             },
             data: {
-                countTotal : 0,
-                countPurchased : 0,
+                countItemsTotal : 0,
+                countItemsPurchased : 0,
                 countHiPriority : 0,
                 state: 'default',
                 header: 'My sopping list',
@@ -45,14 +45,17 @@
                     {
                         label : 'Item 1',
                         purchased : false,
+                        priority : false,
                     },
                     {
                         label : 'Item 2',
                         purchased : true,
+                        priority : true,
                     },
                     {
                         label : 'Item 3',
                         purchased : false,
+                        priority : true,
                     },
                 ]
             },
@@ -75,13 +78,17 @@
                     item.purchased = !item.purchased;
                     this.updateCounters();
                 },
+                togglePriority : function (item) {
+                    item.priority = !item.priority;
+                    this.updateCounters();
+                },
                 updateCounters : function() {
-                    this.countTotal = this.items.length;
-                    this.countPurchased = this.items.filter(function(item) {
+                    this.countItemsTotal = this.items.length;
+                    this.countItemsPurchased = this.items.filter(function(item) {
                         return item.purchased;
                     }).length;
-                    this.countHiPriority = this.items.filter(function(item) {
-                        return item.purchased;
+                    this.countItemsPriority = this.items.filter(function(item) {
+                        return item.priority;
                     }).length;
                 }
             }
