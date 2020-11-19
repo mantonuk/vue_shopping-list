@@ -19,8 +19,15 @@
             <button class="btn btn-cancel" v-else @click="setState('default')">Cancel</button>
         </div>
         <div class="add-item-form" v-if="state === 'edit'">
-            <input v-model="newItem" type="text" placeholder="Add new item" @keyup.enter="saveItem">
-            <button class="btn btn-primary" @click="saveItem" :disabled="newItem.length === 0">Save</button>
+            <form @submit="saveItem">
+                <input v-model="newItem" type="text" placeholder="Add new item" @keyup.enter="saveItem">
+                <button class="btn btn-primary" @click="saveItem" :disabled="newItem.length === 0">Save</button>
+            </form>
+			<div v-if="form_errors.length">
+				<ul>
+					<li v-for="error in form_errors">{{ error }}</li>
+				</ul>
+			</div>
         </div>
         <ul>
             <li v-for="item in items" :class="{strikeout: item.purchased}" @click="togglePurchased(item)">{{ item.label }}</li>
@@ -34,8 +41,9 @@
             created: function() {
             },
             data: {
+                form_errors : ['error1', 'error2'],
                 state: 'default',
-                header: 'My sopping list',
+                header: 'My shopping list',
                 newItem : "",
                 items: [ 
                     {
@@ -56,14 +64,27 @@
                 ]
             },
             methods: {
-                saveItem : function() {
-                    this.items.push(
-                        {
-                            label: this.newItem,
-                            purchased: false
-                        }
-                    );
-                    this.newItem = '';
+                validateForm : function(e) {
+					if (this.newItem && this.newItem.trim()) {
+						return true;
+					}
+
+                    this.form_errors.push['This field required'];
+
+                    e.preventDefault();
+
+                    return false;
+                },
+                saveItem : function(e) {
+                    if (this.validateForm(e)) {
+                        this.items.push(
+                            {
+                                label: this.newItem,
+                                purchased: false
+                            }
+                        );
+                        this.newItem = '';
+                    }
                 },
                 setState : function(value) {
                     this.state = value;
@@ -78,17 +99,14 @@
             },
             computed : {
                 countItemsTotal : function() {
-                    console.log('countItemsTotal');
                     return this.items.length;
                 },
                 countItemsPurchased : function() {
-                    console.log('countItemsPurchased');
                     return this.items.filter(function(item) {
                         return item.purchased;
                     }).length;
                 },
                 countItemsPriority : function() {
-                    console.log('countItemsPriority');
                     return this.items.filter(function(item) {
                         return item.priority;
                     }).length;
