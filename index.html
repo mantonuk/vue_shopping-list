@@ -13,6 +13,14 @@
             <span>Purchased: {{ countItemsPurchased }}</span>, 
             <span>Hi-Priority: {{ countItemsPriority }}</span>, 
         </div>
+        <div v-if="countItemsTotal > 0">
+            <span>Show:</span> 
+            <ul>
+                <li @click="setFilterBy('default')" :class="{active: filterBy === 'default'}"><a>All</a></li>
+                <li @click="setFilterBy('purchased')" :class="{active: filterBy === 'purchased'}"><a>Purchased</a></li>
+                <li @click="setFilterBy('priority')" :class="{active: filterBy === 'priority'}"><a>Top-Priority</a></li>
+            </ul>
+        </div>
         <div class="header">
             <h1>{{ header.toLocaleUpperCase() }}</h1>
             <button class="btn btn-primary" v-if="state === 'default'" @click="setState('edit')">Add Item</button>
@@ -30,7 +38,7 @@
 			</div>
         </div>
         <ul>
-            <li v-for="item in items" :class="{strikeout: item.purchased}" @click="togglePurchased(item)">{{ item.label }}</li>
+            <li v-for="item in itemsFilteredBy" :class="{strikeout: item.purchased}" @click="togglePurchased(item)">{{ item.label }}</li>
         </ul>
         <p v-if="items.length === 0">Empty!</p>
     </div>
@@ -44,7 +52,8 @@
                 form_errors : [],
                 state: 'default',
                 header: 'My shopping list',
-                newItem : "",
+                newItem : '',
+                filterBy: 'default',
                 items: [ 
                     {
                         label : 'Item 1',
@@ -93,12 +102,15 @@
                     this.state = value;
                     this.newItem = '';
                 },
+                setFilterBy: function(value) {
+                    this.filterBy = value;
+                },
                 togglePurchased : function (item) {
                     item.purchased = !item.purchased;
                 },
                 togglePriority : function (item) {
                     item.priority = !item.priority;
-                }
+                },
             },
             computed : {
                 countItemsTotal : function() {
@@ -113,6 +125,16 @@
                     return this.items.filter(function(item) {
                         return item.priority;
                     }).length;
+                },
+                itemsFilteredBy : function() {
+                    var self = this
+                    if (this.filterBy == 'default') {
+                        return this.items;
+                    } else {
+                        return this.items.filter(function(item) {
+                            return item[self.filterBy];
+                        });
+                    }
                 }
             }
         })
