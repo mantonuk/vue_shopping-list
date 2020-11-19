@@ -23,7 +23,7 @@
                 <input v-model="newItem" type="text" placeholder="Add new item" @keyup.enter="saveItem">
                 <button class="btn btn-primary" @click="saveItem" :disabled="newItem.length === 0">Save</button>
             </form>
-			<div v-if="form_errors.length">
+			<div v-if="form_errors.length" @click="cleanFormErrors">
 				<ul>
 					<li v-for="error in form_errors">{{ error }}</li>
 				</ul>
