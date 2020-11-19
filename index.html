@@ -9,9 +9,16 @@
 <body>
     <div id="shopping-list">
         <div class="header">
-            <h1>{{ header.toLocaleUpperCase() }}</h1>
-            <button class="btn btn-primary" v-if="state === 'default'" @click="setState('edit')">Add Item</button>
-            <button class="btn btn-cancel" v-else @click="setState('default')">Cancel</button>
+            <div>
+                <span>Total: {{ countTotal }}</span>, 
+                <span>Purchased: {{ countPurchased}}</span>, 
+                <span>HiPriority: {{ countHiPriority}}</span>, 
+            </div>
+            <div>
+                <h1>{{ header.toLocaleUpperCase() }}</h1>
+                <button class="btn btn-primary" v-if="state === 'default'" @click="setState('edit')">Add Item</button>
+                <button class="btn btn-cancel" v-else @click="setState('default')">Cancel</button>
+            </div>
         </div>
         <div class="add-item-form" v-if="state === 'edit'">
             <input v-model="newItem" type="text" placeholder="Add new item" @keyup.enter="saveItem">
@@ -27,6 +34,9 @@
         var shoppingList = new Vue({
             el: '#shopping-list',
             data: {
+                countTotal : 1,
+                countPurchased : 2,
+                countHiPriority : 3,
                 state: 'default',
                 header: 'My sopping list',
                 newItem : "",
