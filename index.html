@@ -26,6 +26,7 @@
             <button class="btn btn-primary" v-if="state === 'default'" @click="setState('edit')">Add Item</button>
             <button class="btn btn-cancel" v-else @click="setState('default')">Cancel</button>
         </div>
+        <input v-model.trim="searchString" type="text" placeholder="Search..." @keyup.enter="searchItems">
         <div class="add-item-form" v-if="state === 'edit'">
             <form @submit="saveItem">
                 <input v-model.trim="newItem" type="text" placeholder="Add new item" @keyup.enter="saveItem">
@@ -54,6 +55,7 @@
                 header: 'My shopping list',
                 newItem : '',
                 filterBy: 'default',
+                searchString : '',
                 items: [ 
                     {
                         label : 'Item 1',
@@ -111,6 +113,9 @@
                 togglePriority : function (item) {
                     item.priority = !item.priority;
                 },
+                setSearchString : function(value) {
+                    this.searchString = value;
+                }
             },
             computed : {
                 countItemsTotal : function() {
@@ -127,14 +132,25 @@
                     }).length;
                 },
                 itemsFilteredBy : function() {
-                    var self = this
+                    var self = this;
+                    var items = self.items;
+
+                    if (this.searchString && this.searchString.trim()) {
+                        var s = this.searchString.trim().toLowerCase();
+                        items = items.filter(function(item) {
+                            return item.label.toLowerCase().indexOf(s) !== -1;
+                        });
+                    }
+
                     if (this.filterBy == 'default') {
-                        return this.items;
+                        return items;
                     } else {
-                        return this.items.filter(function(item) {
+                        items = items.filter(function(item) {
                             return item[self.filterBy];
                         });
                     }
+
+                    return items;
                 }
             }
         })
