@@ -20,7 +20,7 @@
         </div>
         <div class="add-item-form" v-if="state === 'edit'">
             <form @submit="saveItem">
-                <input v-model="newItem" type="text" placeholder="Add new item" @keyup.enter="saveItem">
+                <input v-model.trim="newItem" type="text" placeholder="Add new item" @keyup.enter="saveItem">
                 <button class="btn btn-primary" @click="saveItem" :disabled="newItem.length === 0">Save</button>
             </form>
 			<div v-if="form_errors.length" @click="cleanFormErrors">
