@@ -32,12 +32,8 @@
         var shoppingList = new Vue({
             el: '#shopping-list',
             created: function() {
-                this.updateCounters();
             },
             data: {
-                countItemsTotal : 0,
-                countItemsPurchased : 0,
-                countHiPriority : 0,
                 state: 'default',
                 header: 'My sopping list',
                 newItem : "",
@@ -68,7 +64,6 @@
                         }
                     );
                     this.newItem = '';
-                    this.updateCounters();
                 },
                 setState : function(value) {
                     this.state = value;
@@ -76,18 +71,25 @@
                 },
                 togglePurchased : function (item) {
                     item.purchased = !item.purchased;
-                    this.updateCounters();
                 },
                 togglePriority : function (item) {
                     item.priority = !item.priority;
-                    this.updateCounters();
+                }
+            },
+            computed : {
+                countItemsTotal : function() {
+                    console.log('countItemsTotal');
+                    return this.items.length;
                 },
-                updateCounters : function() {
-                    this.countItemsTotal = this.items.length;
-                    this.countItemsPurchased = this.items.filter(function(item) {
+                countItemsPurchased : function() {
+                    console.log('countItemsPurchased');
+                    return this.items.filter(function(item) {
                         return item.purchased;
                     }).length;
-                    this.countItemsPriority = this.items.filter(function(item) {
+                },
+                countItemsPriority : function() {
+                    console.log('countItemsPriority');
+                    return this.items.filter(function(item) {
                         return item.priority;
                     }).length;
                 }
