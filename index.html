@@ -41,7 +41,7 @@
             created: function() {
             },
             data: {
-                form_errors : ['error1', 'error2'],
+                form_errors : [],
                 state: 'default',
                 header: 'My shopping list',
                 newItem : "",
@@ -69,7 +69,7 @@
 						return true;
 					}
 
-                    this.form_errors.push['This field required'];
+                    this.form_errors.push('This field required');
 
                     e.preventDefault();
 
