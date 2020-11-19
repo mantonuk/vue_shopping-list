@@ -65,7 +65,7 @@
             },
             methods: {
                 validateForm : function(e) {
-                    this.form_errors = [];
+                    this.cleanFormErrors();
 					if (this.newItem && this.newItem.trim()) {
 						return true;
 					}
@@ -85,6 +85,9 @@
                     }
 
                     e.preventDefault();
+                },
+                cleanFormErrors : function() {
+                    this.form_errors = [];
                 },
                 setState : function(value) {
                     this.state = value;
