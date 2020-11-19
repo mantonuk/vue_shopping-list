@@ -65,14 +65,12 @@
             },
             methods: {
                 validateForm : function(e) {
+                    this.form_errors = [];
 					if (this.newItem && this.newItem.trim()) {
 						return true;
 					}
 
                     this.form_errors.push('This field required');
-
-                    e.preventDefault();
-
                     return false;
                 },
                 saveItem : function(e) {
@@ -85,6 +83,8 @@
                         );
                         this.newItem = '';
                     }
+
+                    e.preventDefault();
                 },
                 setState : function(value) {
                     this.state = value;
