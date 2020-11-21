@@ -29,6 +29,22 @@ ul {
     padding: 0;
 }
 
+#shopping-list LI{
+    margin-bottom:15px;
+}
+
+.filter-by-list {
+}
+
+.filter-by-list LI{
+    float:left;
+    padding-right:15px;
+}
+
+.clear {
+    clear:both;
+}
+
 a {
     color: #6CB2EB;
     font-size: 1.25rem;
@@ -128,6 +144,17 @@ li input {
 
 .btn-cancel:hover {
     background: #E3342F;
+    color: #fff;
+}
+
+.btn-priority{
+    background: #6CB2EB;
+    color: #fff;
+    margin-left:15px;
+}
+
+.btn-priority-hi{
+    background: #EF5753;
     color: #fff;
 }
 

@@ -14,12 +14,13 @@
             <span>Hi-Priority: {{ countItemsPriority }}</span>, 
         </div>
         <div v-if="countItemsTotal > 0">
-            <span>Show:</span> 
-            <ul>
-                <li @click="setFilterBy('default')" :class="{active: filterBy === 'default'}"><a>All</a></li>
-                <li @click="setFilterBy('purchased')" :class="{active: filterBy === 'purchased'}"><a>Purchased</a></li>
-                <li @click="setFilterBy('priority')" :class="{active: filterBy === 'priority'}"><a>Top-Priority</a></li>
+            <ul class="filter-by-list">
+                <li><span>Show:</span></li>
+                <li @click="setFilterBy('default')" :class="{active: filterBy === 'default'}">All</li>
+                <li @click="setFilterBy('purchased')" :class="{active: filterBy === 'purchased'}">Purchased</li>
+                <li @click="setFilterBy('priority')" :class="{active: filterBy === 'priority'}">Top-Priority</li>
             </ul>
+            <div class="clear"></div>
         </div>
         <div class="header">
             <h1>{{ header.toLocaleUpperCase() }}</h1>
@@ -39,7 +40,10 @@
 			</div>
         </div>
         <ul>
-            <li v-for="item in itemsFilteredBy" :class="{strikeout: item.purchased}" @click="togglePurchased(item)">{{ item.label }}</li>
+            <li v-for="item in itemsFilteredBy">
+                <span  @click="togglePurchased(item)" :class="{strikeout: item.purchased, priority: item.priority}">{{ item.label }}</span>  
+                <a @click="togglePriority(item)" class="btn btn-priority" :class="{'btn-priority-hi' : item.priority}">priority</a>
+            </li>
         </ul>
         <p v-if="itemsFilteredBy.length === 0">Empty!</p>
     </div>
