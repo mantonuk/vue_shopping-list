@@ -41,7 +41,7 @@
         <ul>
             <li v-for="item in itemsFilteredBy" :class="{strikeout: item.purchased}" @click="togglePurchased(item)">{{ item.label }}</li>
         </ul>
-        <p v-if="items.length === 0">Empty!</p>
+        <p v-if="itemsFilteredBy.length === 0">Empty!</p>
     </div>
     <script src="https://unpkg.com/vue"></script>
     <script>
