@@ -27,18 +27,18 @@
             <button class="btn btn-primary" v-if="state === 'default'" @click="setState('edit')">Add Item</button>
             <button class="btn btn-cancel" v-else @click="setState('default')">Cancel</button>
         </div>
-        <input v-model.trim="searchString" type="text" placeholder="Search..." @keyup.enter="searchItems">
         <div class="add-item-form" v-if="state === 'edit'">
             <form @submit="saveItem">
                 <input v-model.trim="newItem" type="text" placeholder="Add new item" @keyup.enter="saveItem">
                 <button class="btn btn-primary" @click="saveItem" :disabled="newItem.length === 0">Save</button>
             </form>
-			<div v-if="form_errors.length" @click="cleanFormErrors">
+			<div class="form-errors" v-if="form_errors.length" @click="cleanFormErrors">
 				<ul>
 					<li v-for="error in form_errors">{{ error }}</li>
 				</ul>
 			</div>
         </div>
+        <input v-model.trim="searchString" type="text" placeholder="Search..." @keyup.enter="searchItems">
         <ul>
             <li v-for="item in itemsFilteredBy">
                 <span  @click="togglePurchased(item)" :class="{strikeout: item.purchased, priority: item.priority}">{{ item.label }}</span>  
@@ -93,7 +93,8 @@
                         this.items.push(
                             {
                                 label: this.newItem,
-                                purchased: false
+                                purchased: false,
+                                priority: false
                             }
                         );
                         this.newItem = '';
