@@ -1,2 +1,2 @@
 # vue_shopping-list
-Shopping list (Vue)
+Shopping list (Vue) simple application
